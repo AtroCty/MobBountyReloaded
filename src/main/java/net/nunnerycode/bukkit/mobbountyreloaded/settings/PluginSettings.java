@@ -1,11 +1,14 @@
 package net.nunnerycode.bukkit.mobbountyreloaded.settings;
 
 import com.conventnunnery.libraries.config.ConventYamlConfiguration;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import net.nunnerycode.bukkit.mobbountyreloaded.MobBountyReloadedPlugin;
+import org.bukkit.entity.EntityType;
 
 public class PluginSettings {
 
@@ -17,10 +20,57 @@ public class PluginSettings {
 	private boolean allowCreativeEarning;
 	private Map<String, String> multipliers;
 	private Map<String, String> rewards;
+	private List<String> loadedMobs;
 
 	public PluginSettings(MobBountyReloadedPlugin plugin) {
 		this.plugin = plugin;
 		multipliers = new HashMap<String, String>();
+		rewards = new HashMap<String, String>();
+		loadedMobs = getLoadedMobsFromServer();
+	}
+
+	private List<String> getLoadedMobsFromServer() {
+		List<String> mobs = new ArrayList<String>();
+		for (EntityType creature : EntityType.values()) {
+			switch (creature) {
+				case ARROW:
+				case BOAT:
+				case COMPLEX_PART:
+				case DROPPED_ITEM:
+				case EGG:
+				case ENDER_CRYSTAL:
+				case ENDER_PEARL:
+				case ENDER_SIGNAL:
+				case EXPERIENCE_ORB:
+				case FALLING_BLOCK:
+				case FIREBALL:
+				case FIREWORK:
+				case FISHING_HOOK:
+				case ITEM_FRAME:
+				case LIGHTNING:
+				case MINECART:
+				case MINECART_FURNACE:
+				case MINECART_HOPPER:
+				case MINECART_CHEST:
+				case MINECART_MOB_SPAWNER:
+				case MINECART_TNT:
+				case PAINTING:
+				case PRIMED_TNT:
+				case SMALL_FIREBALL:
+				case SNOWBALL:
+				case SPLASH_POTION:
+				case THROWN_EXP_BOTTLE:
+				case WEATHER:
+				case WITHER_SKULL:
+					continue;
+				default:
+					if (creature.getName() != null && !creature.getName().equalsIgnoreCase("") &&
+							!creature.getName().equalsIgnoreCase("null")) {
+						mobs.add(creature.getName());
+					}
+			}
+		}
+		return mobs;
 	}
 
 	public void load() {
@@ -78,7 +128,9 @@ public class PluginSettings {
 		c.set("creativeEarning.allow", allowCreativeEarning);
 		c.save();
 		c = getPlugin().getRewardYAML();
-		for (Map.Entry<String, String> entry : rewards.entrySet()) {
+		Iterator<Map.Entry<String, String>> iterator = rewards.entrySet().iterator();
+		while (iterator.hasNext()) {
+			Map.Entry<String, String> entry = iterator.next();
 			c.set(entry.getKey(), entry.getValue());
 		}
 		c.save();
@@ -130,5 +182,9 @@ public class PluginSettings {
 
 	public Map<String, String> getRewards() {
 		return Collections.unmodifiableMap(rewards);
+	}
+
+	public List<String> getLoadedMobs() {
+		return Collections.unmodifiableList(loadedMobs);
 	}
 }
