@@ -1,6 +1,5 @@
 package net.nunnerycode.bukkit.mobbountyreloaded.managers;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -32,7 +31,7 @@ public class LanguageManager {
 	}
 
 	public String getMessage(String path) {
-		String message = messages.get(path);
+		String message = messages.get(getPlugin().getSettings().getLocale() + "." + path);
 		if (message == null) {
 			return null;
 		}
@@ -53,11 +52,10 @@ public class LanguageManager {
 	}
 
 	public String getMessage(String path, String[][] arguments) {
-		String message = messages.get(path);
+		String message = getMessage(path);
 		if (message == null) {
 			return null;
 		}
-		message = ChatColor.translateAlternateColorCodes('&', message);
 		for (String[] argument : arguments) {
 			message = message.replaceAll(argument[0], argument[1]);
 		}
@@ -65,22 +63,10 @@ public class LanguageManager {
 	}
 
 	public List<String> getStringList(String path) {
-		List<String> message = Arrays.asList(messages.get(path).split("^"));
-		List<String> strings = new ArrayList<String>();
-		for (String s : message) {
-			strings.add(ChatColor.translateAlternateColorCodes('&', s));
-		}
-		return strings;
+		return Arrays.asList(getMessage(path).split("^"));
 	}
 
 	public List<String> getStringList(String path, String[][] arguments) {
-		List<String> message = Arrays.asList(messages.get(path).split("^"));
-		List<String> strings = new ArrayList<String>();
-		for (String s : message) {
-			for (String[] argument : arguments) {
-				strings.add(ChatColor.translateAlternateColorCodes('&', s.replace(argument[0], argument[1])));
-			}
-		}
-		return strings;
+		return Arrays.asList(getMessage(path).split("^"));
 	}
 }
