@@ -10,4 +10,5 @@ debugMode: true
 # Earning money in creative mode
 creativeEarning:
   allow: true
+populateRewardsIfEmpty: true
 version: 1.0
