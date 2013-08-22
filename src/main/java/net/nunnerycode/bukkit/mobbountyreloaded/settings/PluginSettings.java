@@ -10,7 +10,7 @@ import java.util.Map;
 import net.nunnerycode.bukkit.mobbountyreloaded.MobBountyReloadedPlugin;
 import org.bukkit.entity.EntityType;
 
-public class PluginSettings {
+public final class PluginSettings {
 
 	private MobBountyReloadedPlugin plugin;
 	private String locale;

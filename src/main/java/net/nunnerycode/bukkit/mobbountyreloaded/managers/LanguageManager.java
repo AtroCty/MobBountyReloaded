@@ -8,7 +8,7 @@ import net.nunnerycode.bukkit.mobbountyreloaded.MobBountyReloadedPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-public class LanguageManager {
+public final class LanguageManager {
 
 	private final MobBountyReloadedPlugin plugin;
 	private final Map<String, String> messages;

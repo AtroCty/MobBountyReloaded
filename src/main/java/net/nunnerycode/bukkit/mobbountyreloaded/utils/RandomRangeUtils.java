@@ -2,7 +2,7 @@ package net.nunnerycode.bukkit.mobbountyreloaded.utils;
 
 import java.util.Random;
 
-public class RandomRangeUtils {
+public final class RandomRangeUtils {
 
 	private static final Random RANDOM = new Random();
 

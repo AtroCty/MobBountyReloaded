@@ -12,7 +12,7 @@ import net.nunnerycode.bukkit.mobbountyreloaded.managers.LanguageManager;
 import net.nunnerycode.bukkit.mobbountyreloaded.settings.PluginSettings;
 import net.nunnerycode.java.libraries.cannonball.DebugPrinter;
 
-public class MobBountyReloadedPlugin extends ModulePlugin {
+public final class MobBountyReloadedPlugin extends ModulePlugin {
 
 	private static MobBountyReloadedPlugin INSTANCE;
 	private DebugPrinter debugPrinter;
