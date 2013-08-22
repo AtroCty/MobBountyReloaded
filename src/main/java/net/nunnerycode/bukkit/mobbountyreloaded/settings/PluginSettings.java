@@ -1,6 +1,7 @@
 package net.nunnerycode.bukkit.mobbountyreloaded.settings;
 
 import com.conventnunnery.libraries.config.ConventYamlConfiguration;
+import java.util.Iterator;
 import net.nunnerycode.bukkit.mobbountyreloaded.MobBountyReloadedPlugin;
 
 public class PluginSettings {
@@ -17,13 +18,27 @@ public class PluginSettings {
 	}
 
 	public void load() {
-	 	ConventYamlConfiguration c = getPlugin().getGeneralYAML();
+		ConventYamlConfiguration c = getPlugin().getGeneralYAML();
 		c.load();
 		locale = c.getString("locale", "en");
 		useKillCache = c.getBoolean("killCache.use", false);
 		killCacheTimeLimit = c.getLong("killCache.timeLimit", (long) 30000);
 		debugMode = c.getBoolean("debugMode", false);
 		allowCreativeEarning = c.getBoolean("creativeEarning.allow", false);
+		c = getPlugin().getLocaleYAML();
+		c.load();
+		Iterator<String> iterator = c.getKeys(true).iterator();
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+			if (c.isConfigurationSection(key)) {
+				continue;
+			}
+			getPlugin().getLanguageManager().getMessages().put(key, c.getString(key, key));
+		}
+	}
+
+	public MobBountyReloadedPlugin getPlugin() {
+		return plugin;
 	}
 
 	public void save() {
@@ -74,9 +89,5 @@ public class PluginSettings {
 
 	public void setAllowCreativeEarning(boolean allowCreativeEarning) {
 		this.allowCreativeEarning = allowCreativeEarning;
-	}
-
-	public MobBountyReloadedPlugin getPlugin() {
-		return plugin;
 	}
 }
