@@ -20,6 +20,10 @@ public final class RewardManager {
 		rewardValue = new HashMap<String, double[]>();
 	}
 
+	public void setRewardValue(String string, double[] value) {
+		rewardValue.put(string, value);
+	}
+
 	public void updateRewardValue() {
 		rewardValue.clear();
 		Map<String, String> rewards = getPlugin().getSettings().getRewards();
