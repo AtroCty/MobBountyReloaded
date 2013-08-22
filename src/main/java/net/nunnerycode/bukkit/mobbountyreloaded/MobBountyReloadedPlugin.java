@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import net.nunnerycode.bukkit.libraries.module.Module;
 import net.nunnerycode.bukkit.libraries.module.ModuleLoader;
 import net.nunnerycode.bukkit.libraries.module.ModulePlugin;
+import net.nunnerycode.bukkit.mobbountyreloaded.managers.LanguageManager;
 import net.nunnerycode.bukkit.mobbountyreloaded.settings.PluginSettings;
 import net.nunnerycode.java.libraries.cannonball.DebugPrinter;
 
@@ -23,6 +24,7 @@ public class MobBountyReloadedPlugin extends ModulePlugin {
 	private ConventYamlConfiguration multiplierYAML;
 	private ConventYamlConfiguration rewardYAML;
 	private PluginSettings settings;
+	private LanguageManager languageManager;
 
 	public MobBountyReloadedPlugin() {
 		INSTANCE = this;
@@ -53,14 +55,6 @@ public class MobBountyReloadedPlugin extends ModulePlugin {
 	}
 
 	@Override
-	public void onLoad() {
-		debugPrinter = new DebugPrinter(getDataFolder().getPath(), "debug.log");
-		moduleLoader = new ModuleLoader(this);
-		conventConfigurationManager = new ConventConfigurationManager(this);
-		settings = new PluginSettings(this);
-	}
-
-	@Override
 	public void onDisable() {
 		disable();
 		debug(Level.INFO, getName() + " v" + getDescription().getVersion() + " disabled", "", "", "");
@@ -68,6 +62,11 @@ public class MobBountyReloadedPlugin extends ModulePlugin {
 
 	@Override
 	public void onEnable() {
+		debugPrinter = new DebugPrinter(getDataFolder().getPath(), "debug.log");
+		moduleLoader = new ModuleLoader(this);
+		conventConfigurationManager = new ConventConfigurationManager(this);
+		settings = new PluginSettings(this);
+		languageManager = new LanguageManager(this);
 		enable();
 		debug(Level.INFO, getName() + " v" + getDescription().getVersion() + " enabled");
 	}
@@ -129,5 +128,9 @@ public class MobBountyReloadedPlugin extends ModulePlugin {
 
 	public PluginSettings getSettings() {
 		return settings;
+	}
+
+	public LanguageManager getLanguageManaxger() {
+		return languageManager;
 	}
 }
