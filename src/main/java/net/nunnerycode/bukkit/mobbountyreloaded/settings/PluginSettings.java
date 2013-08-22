@@ -16,6 +16,7 @@ public class PluginSettings {
 	private boolean debugMode;
 	private boolean allowCreativeEarning;
 	private Map<String, String> multipliers;
+	private Map<String, String> rewards;
 
 	public PluginSettings(MobBountyReloadedPlugin plugin) {
 		this.plugin = plugin;
@@ -43,11 +44,24 @@ public class PluginSettings {
 		multipliers.clear();
 		c = getPlugin().getMultiplierYAML();
 		c.load();
-		for (String key : c.getKeys(true)) {
+		Iterator<String> iterator1 = c.getKeys(true).iterator();
+		while (iterator1.hasNext()) {
+			String key = iterator1.next();
 			if (c.isConfigurationSection(key)) {
 				continue;
 			}
 			multipliers.put(key, c.getString(key, key));
+		}
+		rewards.clear();
+		c = getPlugin().getRewardYAML();
+		c.load();
+		Iterator<String> iterator2 = c.getKeys(true).iterator();
+		while (iterator2.hasNext()) {
+			String key = iterator2.next();
+			if (c.isConfigurationSection(key)) {
+				continue;
+			}
+			rewards.put(key, c.getString(key, key));
 		}
 	}
 
@@ -62,6 +76,11 @@ public class PluginSettings {
 		c.set("killCache.timeLimit", killCacheTimeLimit);
 		c.set("debugMode", debugMode);
 		c.set("creativeEarning.allow", allowCreativeEarning);
+		c.save();
+		c = getPlugin().getRewardYAML();
+		for (Map.Entry<String, String> entry : rewards.entrySet()) {
+			c.set(entry.getKey(), entry.getValue());
+		}
 		c.save();
 	}
 
@@ -107,5 +126,9 @@ public class PluginSettings {
 
 	public Map<String, String> getMultipliers() {
 		return Collections.unmodifiableMap(multipliers);
+	}
+
+	public Map<String, String> getRewards() {
+		return Collections.unmodifiableMap(rewards);
 	}
 }
