@@ -14,6 +14,8 @@ import net.nunnerycode.bukkit.mobbountyreloaded.managers.RewardManager;
 import net.nunnerycode.bukkit.mobbountyreloaded.settings.PluginSettings;
 import net.nunnerycode.java.libraries.cannonball.DebugPrinter;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public final class MobBountyReloadedPlugin extends ModulePlugin {
 
@@ -78,14 +80,9 @@ public final class MobBountyReloadedPlugin extends ModulePlugin {
 			Bukkit.getPluginManager().disablePlugin(this);
 			return;
 		}
+		getServer().getMessenger().registerOutgoingPluginChannel(this, "SimpleNotice");
 		enable();
 		debug(Level.INFO, getName() + " v" + getDescription().getVersion() + " enabled");
-	}
-
-	public void reload() {
-		disable();
-		debug(Level.INFO, getName() + " v" + getDescription().getVersion() + " reloaded");
-		enable();
 	}
 
 	private void enable() {
@@ -136,6 +133,24 @@ public final class MobBountyReloadedPlugin extends ModulePlugin {
 
 	public void debug(Level level, String... messages) {
 		debugPrinter.debug(level, messages);
+	}
+
+	public void sendMessage(CommandSender sender, String message) {
+		if (sender instanceof Player) {
+			Player p = (Player) sender;
+			if (p.getListeningPluginChannels().contains(
+					"SimpleNotice")) {
+				p.sendPluginMessage(this, "SimpleNotice", message.getBytes(java.nio.charset.Charset.forName("UTF-8")));
+				return;
+			}
+		}
+		sender.sendMessage(message);
+	}
+
+	public void reload() {
+		disable();
+		debug(Level.INFO, getName() + " v" + getDescription().getVersion() + " reloaded");
+		enable();
 	}
 
 	public PluginSettings getSettings() {
