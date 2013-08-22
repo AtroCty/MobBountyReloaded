@@ -7,12 +7,12 @@ public class MobBountyReloadedEvent extends Event {
 
 	private static final HandlerList HANDLER_LIST = new HandlerList();
 
-	public static HandlerList getHandlerList() {
+	public final static HandlerList getHandlerList() {
 		return HANDLER_LIST;
 	}
 
 	@Override
-	public HandlerList getHandlers() {
+	public final HandlerList getHandlers() {
 		return HANDLER_LIST;
 	}
 

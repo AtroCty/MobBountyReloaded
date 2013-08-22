@@ -7,12 +7,12 @@ public class MobBountyReloadedCancellableEvent extends MobBountyReloadedEvent im
 	private boolean cancelled;
 
 	@Override
-	public boolean isCancelled() {
+	public final boolean isCancelled() {
 		return cancelled;
 	}
 
 	@Override
-	public void setCancelled(boolean cancelled) {
+	public final void setCancelled(boolean cancelled) {
 		this.cancelled = cancelled;
 	}
 }
