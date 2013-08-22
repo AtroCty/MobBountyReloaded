@@ -2,7 +2,6 @@ main: net.nunnerycode.bukkit.mobbountyreloaded.MobBountyReloadedPlugin
 version: ${project.build.version}
 author: ToppleTheNun
 name: ${project.build.name}
-depend: [Vault]
 
 permissions:
     mbr.user.collect:
