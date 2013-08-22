@@ -1,7 +1,10 @@
 package net.nunnerycode.bukkit.mobbountyreloaded.settings;
 
 import com.conventnunnery.libraries.config.ConventYamlConfiguration;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import net.nunnerycode.bukkit.mobbountyreloaded.MobBountyReloadedPlugin;
 
 public class PluginSettings {
@@ -12,9 +15,11 @@ public class PluginSettings {
 	private long killCacheTimeLimit;
 	private boolean debugMode;
 	private boolean allowCreativeEarning;
+	private Map<String, String> multipliers;
 
 	public PluginSettings(MobBountyReloadedPlugin plugin) {
 		this.plugin = plugin;
+		multipliers = new HashMap<String, String>();
 	}
 
 	public void load() {
@@ -34,6 +39,15 @@ public class PluginSettings {
 				continue;
 			}
 			getPlugin().getLanguageManager().getMessages().put(key, c.getString(key, key));
+		}
+		multipliers.clear();
+		c = getPlugin().getMultiplierYAML();
+		c.load();
+		for (String key : c.getKeys(true)) {
+			if (c.isConfigurationSection(key)) {
+				continue;
+			}
+			multipliers.put(key, c.getString(key, key));
 		}
 	}
 
@@ -89,5 +103,9 @@ public class PluginSettings {
 
 	public void setAllowCreativeEarning(boolean allowCreativeEarning) {
 		this.allowCreativeEarning = allowCreativeEarning;
+	}
+
+	public Map<String, String> getMultipliers() {
+		return Collections.unmodifiableMap(multipliers);
 	}
 }
