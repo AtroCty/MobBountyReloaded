@@ -32,4 +32,38 @@ public final class EconomyManager {
 		economy = rsp.getProvider();
 		return economy != null;
 	}
+
+	public boolean setAccount(String accountName, double amount) {
+		if (!economy.hasAccount(accountName)) {
+			economy.createPlayerAccount(accountName);
+		}
+		return transaction(accountName, -economy.getBalance(accountName)) && transaction(accountName, amount);
+	}
+
+	public boolean transaction(String accountName, double amount) {
+		if (amount > 0.0D) {
+			return payAccount(accountName, amount);
+		} else if (amount < 0.0D) {
+			return fineAccount(accountName, amount);
+		}
+		return false;
+	}
+
+	public boolean fineAccount(String accountName, double amount) {
+		double d = Math.abs(amount);
+		if (economy.hasAccount(accountName)) {
+			return economy.withdrawPlayer(accountName, d).transactionSuccess();
+		}
+		economy.createPlayerAccount(accountName);
+		return economy.withdrawPlayer(accountName, d).transactionSuccess();
+	}
+
+	public boolean payAccount(String accountName, double amount) {
+		double d = Math.abs(amount);
+		if (economy.hasAccount(accountName)) {
+			return economy.depositPlayer(accountName, d).transactionSuccess();
+		}
+		economy.createPlayerAccount(accountName);
+		return economy.depositPlayer(accountName, d).transactionSuccess();
+	}
 }
