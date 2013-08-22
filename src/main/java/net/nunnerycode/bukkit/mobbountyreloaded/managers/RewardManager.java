@@ -2,6 +2,7 @@ package net.nunnerycode.bukkit.mobbountyreloaded.managers;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 import net.nunnerycode.bukkit.mobbountyreloaded.MobBountyReloadedPlugin;
@@ -22,7 +23,9 @@ public final class RewardManager {
 
 	public void updateRewardValue() {
 		Map<String, String> rewards = getPlugin().getSettings().getRewards();
-		for (World w : Bukkit.getWorlds()) {
+		Iterator<World> iterator = Bukkit.getWorlds().iterator();
+		while (iterator.hasNext()) {
+			World w = iterator.next();
 			String worldName = w.getName();
 			String typeName;
 			String s;
