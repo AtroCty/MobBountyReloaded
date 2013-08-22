@@ -1,8 +1,11 @@
 <assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
-    <id>bin</id>
+    <id>package</id>
     <includeBaseDirectory>false</includeBaseDirectory>
+    <formats>
+        <format>zip</format>
+    </formats>
     <fileSets>
         <fileSet>
             <directory>${project.build.directory}</directory>
@@ -11,9 +14,33 @@
     </fileSets>
     <files>
         <file>
-            <source>${project.build.directory}/${project.artifactId}-${project.version}.jar</source>
+            <source>${project.build.directory}/${project.build.finalName}.jar</source>
             <outputDirectory>/</outputDirectory>
-            <destName>${artifactId}-${buildNumber}.jar</destName>
+            <destName>${project.build.finalName}.jar</destName>
+        </file>
+        <file>
+            <source>${project.build.directory}/classes/general.yml</source>
+            <outputDirectory>/${project.build.name}</outputDirectory>
+        </file>
+        <file>
+            <source>${project.build.directory}/classes/killstreak.yml</source>
+            <outputDirectory>/${project.build.name}</outputDirectory>
+        </file>
+        <file>
+            <source>${project.build.directory}/classes/locale.yml</source>
+            <outputDirectory>/${project.build.name}</outputDirectory>
+        </file>
+        <file>
+            <source>${project.build.directory}/classes/multiplier.yml</source>
+            <outputDirectory>/${project.build.name}</outputDirectory>
+        </file>
+        <file>
+            <source>${project.build.directory}/classes/license.txt</source>
+            <outputDirectory>/</outputDirectory>
+        </file>
+        <file>
+            <source>${project.build.directory}/classes/reward.yml</source>
+            <outputDirectory>/${project.build.name}</outputDirectory>
         </file>
     </files>
 </assembly>
