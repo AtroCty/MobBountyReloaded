@@ -1,4 +1,4 @@
-main: com.conventnunnery.mobbountyreloaded.MobBountyReloaded
+main: net.nunnerycode.bukkit.mobbountyreloaded.MobBountyReloadedPlugin
 version: ${project.build.version}
 author: ToppleTheNun
 name: ${project.build.name}
