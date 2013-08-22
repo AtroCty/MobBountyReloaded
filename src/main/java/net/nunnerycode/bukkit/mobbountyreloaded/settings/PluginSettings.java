@@ -18,6 +18,7 @@ public class PluginSettings {
 	private long killCacheTimeLimit;
 	private boolean debugMode;
 	private boolean allowCreativeEarning;
+	private boolean populateRewardsIfEmpty;
 	private Map<String, String> multipliers;
 	private Map<String, String> rewards;
 	private List<String> loadedMobs;
@@ -81,6 +82,7 @@ public class PluginSettings {
 		killCacheTimeLimit = c.getLong("killCache.timeLimit", (long) 30000);
 		debugMode = c.getBoolean("debugMode", false);
 		allowCreativeEarning = c.getBoolean("creativeEarning.allow", false);
+		populateRewardsIfEmpty = c.getBoolean("populateRewardsIfEmpty", true);
 		c = getPlugin().getLocaleYAML();
 		c.load();
 		Iterator<String> iterator = c.getKeys(true).iterator();
@@ -113,10 +115,11 @@ public class PluginSettings {
 			}
 			rewards.put(key, c.getString(key, key));
 		}
-		if (rewards.isEmpty()) {
+		if (rewards.isEmpty() && populateRewardsIfEmpty) {
 			for (String mob : getLoadedMobs()) {
-				rewards.put(mob, "0.0");
+				rewards.put("Default." + mob, "0.0");
 			}
+			populateRewardsIfEmpty = false;
 		}
 	}
 
@@ -131,6 +134,7 @@ public class PluginSettings {
 		c.set("killCache.timeLimit", killCacheTimeLimit);
 		c.set("debugMode", debugMode);
 		c.set("creativeEarning.allow", allowCreativeEarning);
+		c.set("populateRewardsIfEmpty", populateRewardsIfEmpty);
 		c.save();
 		c = getPlugin().getRewardYAML();
 		Iterator<Map.Entry<String, String>> iterator = rewards.entrySet().iterator();
@@ -191,5 +195,13 @@ public class PluginSettings {
 
 	public List<String> getLoadedMobs() {
 		return Collections.unmodifiableList(loadedMobs);
+	}
+
+	public boolean isPopulateRewardsIfEmpty() {
+		return populateRewardsIfEmpty;
+	}
+
+	public void setPopulateRewardsIfEmpty(boolean populateRewardsIfEmpty) {
+		this.populateRewardsIfEmpty = populateRewardsIfEmpty;
 	}
 }
