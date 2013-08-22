@@ -14,62 +14,80 @@ import com.conventnunnery.mobbountyreloaded.listeners.MobBountyReloadedEntityLis
 import com.conventnunnery.mobbountyreloaded.managers.MobBountyCommand;
 import com.conventnunnery.mobbountyreloaded.managers.MobBountyConfigs;
 import com.conventnunnery.mobbountyreloaded.managers.MobBountyEconomy;
+import com.conventnunnery.mobbountyreloaded.managers.MobBountyLanguage;
 import com.conventnunnery.mobbountyreloaded.managers.MobBountyLocale;
 import com.conventnunnery.mobbountyreloaded.managers.MobBountyPermission;
 import com.conventnunnery.mobbountyreloaded.managers.MobBountySettings;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.mcstats.Metrics;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 public class MobBountyReloaded extends JavaPlugin {
 
-	public static MobBountyReloaded getInstance() {
-		return instance;
-	}
-
-	public static void setInstance(final MobBountyReloaded instance) {
-		MobBountyReloaded.instance = instance;
-	}
-
-	private MobBountyAPI api;
 	private static MobBountyReloaded instance;
+	private MobBountyAPI api;
 	private MobBountyConfigs configManager;
 	private MobBountySettings settingsManager;
 	private MobBountyEconomy econManager;
 	private MobBountyLocale localeManager;
 	private MobBountyCommand commandManager;
 	private MobBountyPermission permissionManager;
+	private MobBountyLanguage languageManager;
 
-	public MobBountyAPI getAPI() {
-		return api;
+	public MobBountyReloaded() {
+		instance = this;
 	}
 
 	public MobBountyCommand getCommandManager() {
 		return commandManager;
 	}
 
+	private void setCommandManager(final MobBountyCommand commandManager) {
+		this.commandManager = commandManager;
+	}
+
 	public MobBountyConfigs getConfigManager() {
 		return configManager;
+	}
+
+	private void setConfigManager(final MobBountyConfigs configManager) {
+		this.configManager = configManager;
 	}
 
 	public MobBountyEconomy getEconManager() {
 		return econManager;
 	}
 
+	private void setEconManager(final MobBountyEconomy econManager) {
+		this.econManager = econManager;
+	}
+
 	public MobBountyLocale getLocaleManager() {
 		return localeManager;
+	}
+
+	private void setLocaleManager(final MobBountyLocale localeManager) {
+		this.localeManager = localeManager;
 	}
 
 	public MobBountyPermission getPermissionManager() {
 		return permissionManager;
 	}
 
+	private void setPermissionManager(
+			final MobBountyPermission permissionManager) {
+		this.permissionManager = permissionManager;
+	}
+
 	public MobBountySettings getSettingsManager() {
 		return settingsManager;
+	}
+
+	private void setSettingsManager(MobBountySettings settingsManager) {
+		this.settingsManager = settingsManager;
 	}
 
 	@Override
@@ -80,13 +98,13 @@ public class MobBountyReloaded extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		setInstance(this);
 		setAPI(new MobBountyAPI(getInstance()));
 		setPermissionManager(new MobBountyPermission(getInstance()));
 		setConfigManager(new MobBountyConfigs(getInstance()));
 		setLocaleManager(new MobBountyLocale(getInstance()));
 		setSettingsManager(new MobBountySettings(getInstance()));
 		setEconManager(new MobBountyEconomy(getInstance()));
+		setLanguageManager(new MobBountyLanguage(getInstance()));
 		new MobBountyReloadedEntityListener(getInstance());
 		setCommandManager(new MobBountyCommand(getInstance()));
 		getServer().getMessenger().registerOutgoingPluginChannel(this,
@@ -101,35 +119,6 @@ public class MobBountyReloaded extends JavaPlugin {
 		startStatistics();
 	}
 
-	private void setAPI(final MobBountyAPI api) {
-		this.api = api;
-	}
-
-	private void setCommandManager(final MobBountyCommand commandManager) {
-		this.commandManager = commandManager;
-	}
-
-	private void setConfigManager(final MobBountyConfigs configManager) {
-		this.configManager = configManager;
-	}
-
-	private void setEconManager(final MobBountyEconomy econManager) {
-		this.econManager = econManager;
-	}
-
-	private void setLocaleManager(final MobBountyLocale localeManager) {
-		this.localeManager = localeManager;
-	}
-
-	private void setPermissionManager(
-			final MobBountyPermission permissionManager) {
-		this.permissionManager = permissionManager;
-	}
-
-	private void setSettingsManager(MobBountySettings settingsManager) {
-		this.settingsManager = settingsManager;
-	}
-
 	private void startStatistics() {
 		try {
 			new Metrics(this).start();
@@ -137,4 +126,23 @@ public class MobBountyReloaded extends JavaPlugin {
 		}
 	}
 
+	public static MobBountyReloaded getInstance() {
+		return instance;
+	}
+
+	public MobBountyAPI getAPI() {
+		return api;
+	}
+
+	private void setAPI(final MobBountyAPI api) {
+		this.api = api;
+	}
+
+	public MobBountyLanguage getLanguageManager() {
+		return languageManager;
+	}
+
+	private void setLanguageManager(MobBountyLanguage languageManager) {
+		this.languageManager = languageManager;
+	}
 }
