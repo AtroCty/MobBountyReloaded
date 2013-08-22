@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import net.nunnerycode.bukkit.libraries.module.Module;
 import net.nunnerycode.bukkit.libraries.module.ModuleLoader;
 import net.nunnerycode.bukkit.libraries.module.ModulePlugin;
+import net.nunnerycode.bukkit.mobbountyreloaded.settings.PluginSettings;
 import net.nunnerycode.java.libraries.cannonball.DebugPrinter;
 
 public class MobBountyReloadedPlugin extends ModulePlugin {
@@ -21,6 +22,7 @@ public class MobBountyReloadedPlugin extends ModulePlugin {
 	private ConventYamlConfiguration localeYAML;
 	private ConventYamlConfiguration multiplierYAML;
 	private ConventYamlConfiguration rewardYAML;
+	private PluginSettings settings;
 
 	public MobBountyReloadedPlugin() {
 		INSTANCE = this;
@@ -55,6 +57,7 @@ public class MobBountyReloadedPlugin extends ModulePlugin {
 		debugPrinter = new DebugPrinter(getDataFolder().getPath(), "debug.log");
 		moduleLoader = new ModuleLoader(this);
 		conventConfigurationManager = new ConventConfigurationManager(this);
+		settings = new PluginSettings(this);
 	}
 
 	@Override
@@ -71,7 +74,7 @@ public class MobBountyReloadedPlugin extends ModulePlugin {
 
 	public void reload() {
 		disable();
-
+		debug(Level.INFO, getName() + " v" + getDescription().getVersion() + " reloaded");
 		enable();
 	}
 
@@ -80,12 +83,18 @@ public class MobBountyReloadedPlugin extends ModulePlugin {
 		conventConfigurationManager.unpackConfigurationFiles("general.yml", "killstreak.yml", "locale.yml",
 				"multiplier.yml", "reward.yml");
 
-
 		generalYAML = new ConventYamlConfiguration(new File(getDataFolder().getPath(), "general.yml"));
+		generalYAML.load();
 		killstreakYAML = new ConventYamlConfiguration(new File(getDataFolder().getPath(), "killstreak.yml"));
+		killstreakYAML.load();
 		localeYAML = new ConventYamlConfiguration(new File(getDataFolder().getPath(), "locale.yml"));
+		localeYAML.load();
 		multiplierYAML = new ConventYamlConfiguration(new File(getDataFolder().getPath(), "multiplier.yml"));
+		multiplierYAML.load();
 		rewardYAML = new ConventYamlConfiguration(new File(getDataFolder().getPath(), "reward.yml"));
+		rewardYAML.load();
+
+		settings.load();
 
 		Iterator<Module> iterator = getModules().iterator();
 		while (iterator.hasNext()) {
@@ -110,10 +119,15 @@ public class MobBountyReloadedPlugin extends ModulePlugin {
 			debug(Level.INFO, m.getName() + " disabled");
 		}
 		getModules().clear();
+
+		settings.save();
 	}
 
 	public void debug(Level level, String... messages) {
 		debugPrinter.debug(level, messages);
 	}
 
+	public PluginSettings getSettings() {
+		return settings;
+	}
 }
