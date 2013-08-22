@@ -20,8 +20,22 @@ public final class RewardManager {
 		rewardValue = new HashMap<String, double[]>();
 	}
 
-	public void setRewardValue(String string, double[] value) {
-		rewardValue.put(string, value);
+	public void setRewardValue(String string, String value) {
+		if (value.contains(":")) {
+			rewardValue.put(string, handleRange(value, ":", 0.0D));
+		} else {
+			rewardValue.put(string, new double[]{getDouble(value, 0.0D), getDouble(value, 0.0D)});
+		}
+	}
+
+	private double getDouble(String string, double fallBack) {
+		double d;
+		try {
+			d = Double.parseDouble(string);
+		} catch (Exception e) {
+			d = fallBack;
+		}
+		return d;
 	}
 
 	public void updateRewardValue() {
@@ -61,16 +75,6 @@ public final class RewardManager {
 					getDouble(splitString[1], 0.0D)};
 		}
 		return new double[]{fallback, fallback};
-	}
-
-	private double getDouble(String string, double fallBack) {
-		double d;
-		try {
-			d = Double.parseDouble(string);
-		} catch (Exception e) {
-			d = fallBack;
-		}
-		return d;
 	}
 
 	public double getValue(String worldName, String type) {
