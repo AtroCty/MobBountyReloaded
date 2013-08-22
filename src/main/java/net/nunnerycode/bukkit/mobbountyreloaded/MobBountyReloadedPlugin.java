@@ -8,9 +8,12 @@ import java.util.logging.Level;
 import net.nunnerycode.bukkit.libraries.module.Module;
 import net.nunnerycode.bukkit.libraries.module.ModuleLoader;
 import net.nunnerycode.bukkit.libraries.module.ModulePlugin;
+import net.nunnerycode.bukkit.mobbountyreloaded.managers.EconomyManager;
 import net.nunnerycode.bukkit.mobbountyreloaded.managers.LanguageManager;
+import net.nunnerycode.bukkit.mobbountyreloaded.managers.RewardManager;
 import net.nunnerycode.bukkit.mobbountyreloaded.settings.PluginSettings;
 import net.nunnerycode.java.libraries.cannonball.DebugPrinter;
+import org.bukkit.Bukkit;
 
 public final class MobBountyReloadedPlugin extends ModulePlugin {
 
@@ -25,6 +28,8 @@ public final class MobBountyReloadedPlugin extends ModulePlugin {
 	private ConventYamlConfiguration rewardYAML;
 	private PluginSettings settings;
 	private LanguageManager languageManager;
+	private RewardManager rewardManager;
+	private EconomyManager economyManager;
 
 	public MobBountyReloadedPlugin() {
 		INSTANCE = this;
@@ -67,6 +72,12 @@ public final class MobBountyReloadedPlugin extends ModulePlugin {
 		conventConfigurationManager = new ConventConfigurationManager(this);
 		settings = new PluginSettings(this);
 		languageManager = new LanguageManager(this);
+		rewardManager = new RewardManager(this);
+		economyManager = new EconomyManager(this);
+		if (!economyManager.setupEconomy()) {
+			Bukkit.getPluginManager().disablePlugin(this);
+			return;
+		}
 		enable();
 		debug(Level.INFO, getName() + " v" + getDescription().getVersion() + " enabled");
 	}
@@ -78,7 +89,6 @@ public final class MobBountyReloadedPlugin extends ModulePlugin {
 	}
 
 	private void enable() {
-
 		conventConfigurationManager.unpackConfigurationFiles("general.yml", "killstreak.yml", "locale.yml",
 				"multiplier.yml", "reward.yml");
 
@@ -108,6 +118,8 @@ public final class MobBountyReloadedPlugin extends ModulePlugin {
 			Module m = iterator.next();
 			debug(Level.INFO, m.getName() + " enabled");
 		}
+
+		rewardManager.updateRewardValue();
 	}
 
 	private void disable() {
@@ -132,5 +144,13 @@ public final class MobBountyReloadedPlugin extends ModulePlugin {
 
 	public LanguageManager getLanguageManager() {
 		return languageManager;
+	}
+
+	public RewardManager getRewardManager() {
+		return rewardManager;
+	}
+
+	public EconomyManager getEconomyManager() {
+		return economyManager;
 	}
 }
