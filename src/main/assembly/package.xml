@@ -6,12 +6,6 @@
     <formats>
         <format>zip</format>
     </formats>
-    <fileSets>
-        <fileSet>
-            <directory>${project.build.directory}</directory>
-            <outputDirectory>/target</outputDirectory>
-        </fileSet>
-    </fileSets>
     <files>
         <file>
             <source>${project.build.directory}/${project.build.finalName}.jar</source>
