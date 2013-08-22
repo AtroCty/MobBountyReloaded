@@ -28,34 +28,26 @@ en:
   MBFine: '&4%M% : &F%A%'
   MBFineRange: '&4%M% : &F%1% - %2%'
   MBInfo: '&d%C% &F- &2%H%'
+  MBCommandUsage: '&CUsage: /%command% %args%'
   MBGChange: '&2General setting &F%S% &2has been changed to &F%V%&2.'
   MBGUsage: '&CUsage: /%C% [property] <amount>'
   MBGProperty: '&7Property: locale, debug, usekillcache, killcachetimelimit, allowcreative'
   MBRChange: '&2Default reward/fine for mob &F%M% &2has been changed to &F%A%&2.'
   MBRUsage: '&CUsage: /%C% [mob] <amount>'
   MBRDeny: '&CYou cannot set for that mob.'
-  MBRMobs: '&7Mob: Creeper, Skeleton, Spider, Giant, Zombie, Slime, Ghast, PigZombie,
-    Enderman, CaveSpider, Silverfish, Blaze, LavaSlime, EnderDragon, WitherBoss, Bat,
-    Witch, Pig, Sheep, Cow, Chicken, Squid, Wolf, MushroomCow, SnowMan, Ozelot, VillagerGolem,
-    Villager'
+  MBRMobs: '&7Mob: %loadedmobs%'
   MBWRChange: '&2Reward for mob &F%M% &2in world &F%W% &2has been changed to &F%A%&2.'
   MBWRReset: '&2Reward for mob &F%M% &2in world &F%W% &2has been reset to default.'
   MBWRUsage: '&CUsage: /%C% <world> <mob> [amount]'
   MBWRWorlds: '&7World: %W%'
-  MBWRMobs: '&7Mob: Creeper, Skeleton, Spider, Giant, Zombie, Slime, Ghast, PigZombie,
-    Enderman, CaveSpider, Silverfish, Blaze, LavaSlime, EnderDragon, WitherBoss, Bat,
-    Witch, Pig, Sheep, Cow, Chicken, Squid, Wolf, MushroomCow, SnowMan, Ozelot, VillagerGolem,
-    Villager'
+  MBWRMobs: '&7Mob: %loadedmobs%'
   MBWRDeny: '&CYou cannot set for that mob.'
   MBEMChange: '&2Multiplier for the &F%E% &2environment has been changed to &F%A%&2.'
   MBEMUsage: '&CUsage: /%C% <environment> [amount]'
-  MBEMEnvs: '&7Environment: NORMAL, NETHER, THE_END'
+  MBEMEnvs: '&7Environment: %loadedenvironments%'
   MBBMChange: '&2Multiplier for the &F%B% &2biome has been changed to &F%A%&2.'
   MBBMUsage: '&CUsage: /%C% <biome> [amount]'
-  MBBMBiomes: '&7Biomes: SWAMPLAND, FOREST, TAIGA, DESERT, PLAINS, HELL, SKY, OCEAN,
-    RIVER, EXTREME_HILLS, FROZEN_OCEAN, FROZEN_RIVER, ICE_PLAINS, ICE_MOUNTAINS, MUSHROOM_ISLAND,
-    MUSHROOM_SHORE, BEACH, DESERT_HILLS, FOREST_HILLS, TAIGA_HILLS, SMALL_MOUNTAINS,
-    JUNGLE, JUNGLE_HILLS'
+  MBBMBiomes: '&7Biomes: %loadedbiomes%'
   MBTMChange: '&2Multiplier during the &F%T% &2has been changed to &F%A%&2.'
   MBTMUsage: '&CUsage: /%C% <time> [amount]'
   MBTMTimes: '&7Time: Day, Sunset, Night, Sunrise'
