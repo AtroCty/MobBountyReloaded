@@ -185,7 +185,6 @@
                                     <include>net.nunnerycode.bukkit:ExtendibleBukkitConfig</include>
                                     <include>se.ranzdo.bukkit:methodcommand</include>
                                     <include>net.nunnerycode.bukkit:ModuleSystem</include>
-                                    <include>org.apache.commons:commons-lang3</include>
                                     <include>net.nunnerycode.java.libraries:Cannonball</include>
                                     <include>org.mcstats.bukkit:metrics</include>
                                 </includes>
@@ -250,13 +249,6 @@
             <groupId>net.nunnerycode.bukkit</groupId>
             <artifactId>ModuleSystem</artifactId>
             <version>1.2.2-SNAPSHOT</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.1</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
