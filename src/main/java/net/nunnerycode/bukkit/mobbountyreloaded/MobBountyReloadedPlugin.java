@@ -130,7 +130,7 @@ public class MobBountyReloadedPlugin extends ModulePlugin {
 		return settings;
 	}
 
-	public LanguageManager getLanguageManaxger() {
+	public LanguageManager getLanguageManager() {
 		return languageManager;
 	}
 }
