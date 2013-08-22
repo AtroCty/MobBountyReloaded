@@ -6,7 +6,7 @@ import net.nunnerycode.bukkit.mobbountyreloaded.MobBountyReloadedPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
-public class EconomyManager {
+public final class EconomyManager {
 
 	private final MobBountyReloadedPlugin plugin;
 	private Economy economy;
