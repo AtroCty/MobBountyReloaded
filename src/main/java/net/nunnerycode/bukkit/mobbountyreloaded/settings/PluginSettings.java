@@ -113,6 +113,11 @@ public class PluginSettings {
 			}
 			rewards.put(key, c.getString(key, key));
 		}
+		if (rewards.isEmpty()) {
+			for (String mob : getLoadedMobs()) {
+				rewards.put(mob, "0.0");
+			}
+		}
 	}
 
 	public MobBountyReloadedPlugin getPlugin() {
